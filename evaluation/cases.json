@@ -1,0 +1,14 @@
+[
+  {"id":"ua-transfer","text":"Марія зустріла Олега. Вона передала йому листа.","characters":["Марія","Олег"],"relations":[["Марія","Олег","transfer"]]},
+  {"id":"ua-conversation","text":"Ірина зателефонувала Павлу. Павло відповів Ірині й запросив її на зустріч.","characters":["Ірина","Павло"],"relations":[["Ірина","Павло","conversation"],["Павло","Ірина","conversation"]]},
+  {"id":"ua-support","text":"Олена допомогла Тарасу донести сумки. Тарас подякував Олені.","characters":["Олена","Тарас"],"relations":[["Олена","Тарас","support"]]},
+  {"id":"ua-conflict","text":"Андрій посварився з Богданом через загублену книгу. Богдан відмовився говорити з Андрієм.","characters":["Андрій","Богдан"],"relations":[["Андрій","Богдан","conflict"]]},
+  {"id":"ua-family","text":"Наталя — сестра Софії. Софія завжди підтримувала Наталю.","characters":["Наталя","Софія"],"relations":[["Наталя","Софія","family"],["Софія","Наталя","support"]]},
+  {"id":"ua-no-relation","text":"Марко сидів удома й читав газету. Лідія цього дня працювала в саду.","characters":["Марко","Лідія"],"relations":[]},
+  {"id":"en-transfer","text":"Alice met Bob. She handed him the keys.","characters":["Alice","Bob"],"relations":[["Alice","Bob","transfer"]]},
+  {"id":"en-conflict","text":"Emma argued with Noah about the missing notebook. Noah blamed Emma for losing it.","characters":["Emma","Noah"],"relations":[["Emma","Noah","conflict"]]},
+  {"id":"ua-ambiguous","text":"Петро розповів Івану, що його брат повернувся. Іван промовчав.","characters":["Петро","Іван"],"relations":[["Петро","Іван","conversation"]],"limitation":"Чий брат? Неоднозначно без додаткового контексту."},
+  {"id":"en-pronoun","text":"Helen spoke to Rose. Rose gave Helen a map. She smiled.","characters":["Helen","Rose"],"relations":[["Helen","Rose","conversation"],["Rose","Helen","transfer"]],"limitation":"She smiled is ambiguous and must not be force-resolved."},
+  {"id":"ua-relations","text":"Павло попередив Романа про небезпеку. Роман допоміг Павлу закрити ворота.","characters":["Павло","Роман"],"relations":[["Павло","Роман","conversation"],["Роман","Павло","support"]]},
+  {"id":"en-alias","text":"Michael found Julia in the garden. Mike showed Julia a letter. Julia thanked Michael.","characters":["Michael","Julia"],"relations":[["Michael","Julia","transfer"]],"limitation":"Mike may or may not be the same as Michael without explicit context."}
+]

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101d2a">
+  <title>NarrativeGraph — аналіз персонажів</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">N<span>·</span></div><div><strong>NarrativeGraph</strong><small>Аналіз художнього тексту</small></div></div>
+    <div class="nav-group"><span class="nav-heading">РОБОЧА ОБЛАСТЬ</span><div class="nav-link active"><span class="nav-icon">◈</span> Аналіз твору</div></div>
+    <div class="sidebar-divider"></div>
+    <span class="nav-heading">ПРИКЛАДИ ТЕКСТІВ</span>
+    <div class="example-list" id="exampleList"><span class="small-muted">Завантаження…</span></div>
+    <div class="sidebar-foot"><div class="provider-dot" id="configIndicator"></div><div><strong id="configText">Перевірка API</strong><small id="configSubtext">Налаштування моделі</small></div></div>
+  </aside>
+  <main class="workspace">
+    <header class="topbar">
+      <div class="breadcrumb">Моя робоча область <span>/</span> <strong>Аналіз твору</strong></div>
+      <div class="topbar-right"><div class="status-chip" id="globalStatus"><span class="status-ring"></span> Готово до аналізу</div><span class="app-version">v1.5</span></div>
+    </header>
+    <div class="page-content">
+      <div class="intro"><div><div class="eyebrow">МОВНИЙ АНАЛІЗ</div><h1>Мережа персонажів</h1><p>Персонажі, їхні взаємодії та підтвердження безпосередньо в тексті.</p></div><div class="tag-label"><span class="small-diamond">✦</span> NLP · LLM · Agent</div></div>
+      <div class="stats" id="stats">
+        <div class="stat"><div class="stat-caption">Персонажі</div><div class="stat-value" id="countCharacters">—</div><div class="stat-hint">Ідентифіковано</div></div>
+        <div class="stat"><div class="stat-caption">Взаємодії</div><div class="stat-value" id="countRelations">—</div><div class="stat-hint">З підтвердженнями</div></div>
+        <div class="stat"><div class="stat-caption">Згадки</div><div class="stat-value" id="countMentions">—</div><div class="stat-hint">Імена й займенники</div></div>
+        <div class="stat"><div class="stat-caption">Невизначені згадки</div><div class="stat-value" id="countUnresolved">—</div><div class="stat-hint">Потрібен контекст</div></div>
+      </div>
+      <div class="main-grid">
+        <section class="panel editor-panel">
+          <div class="panel-header"><div><h2>Вхідний текст</h2><p>Встав уривок або завантаж TXT</p></div><button type="button" id="loadFile" class="icon-button" title="Відкрити TXT-файл" aria-label="Завантажити TXT">↥</button><input type="file" id="fileInput" accept=".txt,text/plain" hidden></div>
+          <div class="editor-controls"><span class="tiny-label">ТЕКСТ ТВОРУ</span><span class="character-count" id="charCount">0 / 12 000</span></div>
+          <textarea id="sourceText" spellcheck="false" aria-label="Текст твору" placeholder="Встав сюди уривок художнього тексту…"></textarea>
+          <div class="editor-bottom"><div class="control-tip"><span class="tip-icon">i</span><span>Підходять невеликі оповідання та уривки обсягом до 12 000 символів.</span></div><button id="analyzeButton" class="primary-button"><span class="button-icon">✦</span><span>Аналізувати текст</span><span class="button-arrow">→</span></button></div>
+          <div class="error-msg" id="errorBox" role="alert" hidden></div>
+        </section>
+        <section class="panel graph-panel">
+          <div class="panel-header graph-header"><div><h2>Граф взаємин</h2><p id="graphSubtitle">Результат з'явиться після аналізу</p></div><div class="graph-actions"><button class="icon-button" id="zoomOut" title="Зменшити масштаб" aria-label="Зменшити">−</button><button class="icon-button" id="resetView" title="Початковий вигляд" aria-label="Початковий вигляд">⌗</button><button class="icon-button" id="zoomIn" title="Збільшити масштаб" aria-label="Збільшити">+</button></div></div>
+          <div class="graph-filters" id="filters"><span class="filters-title">ЗВ’ЯЗКИ</span><button class="filter-chip active" data-filter="all">Усі</button><button class="filter-chip" data-filter="conversation">Розмови</button><button class="filter-chip" data-filter="transfer">Передача</button><button class="filter-chip" data-filter="support">Допомога</button><button class="filter-chip" data-filter="conflict">Конфлікти</button><button class="filter-chip" data-filter="family">Родинні</button><button class="filter-chip" data-filter="other">Інші</button></div>
+          <div class="canvas-wrap" id="canvasWrap"><div class="graph-empty" id="graphEmpty"><div class="empty-illustration"><span>●</span><span>●</span><span>●</span><svg viewBox="0 0 200 130"><path d="M45 70L95 27L153 80L45 70L95 108L153 80" fill="none" stroke="currentColor" stroke-width="1.8" opacity=".45"/></svg></div><h3>Візуалізація взаємин</h3><p>Запусти аналіз, щоб побачити персонажів і зв'язки між ними.</p></div><svg id="graphSvg" role="img" aria-label="Граф персонажів" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" hidden><defs><marker id="arrowHead" markerWidth="7" markerHeight="7" refX="18" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L7 3.5 L0 7Z" fill="#90a0af"/></marker></defs><g id="graphTransform"><g id="edgesLayer"></g><g id="nodesLayer"></g></g></svg><div class="graph-hint" id="graphHint" hidden>Перетягни вузол або полотно · Натисни на зв’язок для перегляду цитати</div></div>
+          <div class="graph-footer"><span><i class="legend-dot legend-character"></i>Персонажі</span><span><i class="legend-line"></i>Взаємодії</span><span class="graph-footer-right" id="modelInfo">—</span></div>
+        </section>
+        <section class="panel details-panel"><div class="panel-header"><div><h2>Деталі аналізу</h2><p>Факти та фрагменти оригіналу</p></div></div><div id="inspector" class="inspector"><div class="placeholder-icon">⌕</div><h3>Оберіть елемент графа</h3><p>Тут з’являться згадки персонажів або докази їхньої взаємодії.</p></div></section>
+      </div>
+      <div class="bottom-grid">
+        <section class="panel text-panel"><div class="panel-header"><div><h2>Текст і згадки</h2><p>Речення з розпізнаними персонажами</p></div><span class="subdued-pill" id="sentencesCount">0 речень</span></div><div class="sentences" id="sentences"><div class="section-empty">Після аналізу тут відображатимуться речення та згадки.</div></div></section>
+        <section class="panel agent-panel"><div class="panel-header"><div><h2>Дії агента</h2><p>Перевірка контексту та доказів</p></div><span class="subdued-pill" id="actionsCount">0 дій</span></div><div id="agentTrace" class="agent-trace"><div class="section-empty">Журнал роботи агента з’явиться після аналізу.</div></div><div class="warning-list" id="warnings"></div></section>
+      </div>
+      <footer class="site-footer"><span>NarrativeGraph · Локальний аналіз тексту</span><button id="exportButton" class="text-button" disabled>Експортувати JSON ↗</button></footer>
+    </div>
+  </main>
+</div>
+</body>
+</html>
